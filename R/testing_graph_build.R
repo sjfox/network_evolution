@@ -34,11 +34,7 @@ get_modularity <- function(graph){
   modularity(x = graph, membership = membership(cluster_louvain(graph)))
 }
 
-get_clustering <- function(graph){
-  ## Returns the modularity for a single graph
-  modularity(x = graph, membership = membership(cluster_louvain(graph)))
-  transitivity(graph)
-}
+
 
 graph_list %>% purrr::map(~get_modularity(.x)) %>% unlist() -> test
 
