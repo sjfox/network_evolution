@@ -8,7 +8,7 @@ g <- make_empty_graph(n = 3, directed = F) %>%
   add_edges(c(1,2, 2,3, 3,1))
 
 
-tot_nodes <- 10000
+tot_nodes <- 500
 edges_to_attach <- 2
 alpha <- 2
 init_graph_length <- length(V(g))
@@ -34,10 +34,17 @@ get_modularity <- function(graph){
   modularity(x = graph, membership = membership(cluster_louvain(graph)))
 }
 
+get_clustering <- function(graph){
+  ## Returns the modularity for a single graph
+  modularity(x = graph, membership = membership(cluster_louvain(graph)))
+  transitivity(graph)
+}
+
 graph_list %>% purrr::map(~get_modularity(.x)) %>% unlist() -> test
 
+graph_list %>% purrr::map(~transitivity(.x)) %>% unlist() -> test
 
-plot(test[2000:6000] / mean(test) -1)
+plot(test)
 
 
 
